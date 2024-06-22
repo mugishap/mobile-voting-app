@@ -48,6 +48,12 @@ export interface IRegisterData {
     password: string;
 }
 
+export interface IUpdateData {
+    names: string;
+    email: string;
+    telephone: string;
+}
+
 export interface IPaginationMeta {
     total: number;
     lastPage: number;

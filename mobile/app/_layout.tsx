@@ -9,6 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import GlobalProvider from '@/context';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
+import { ToastProvider } from 'react-native-toast-notifications';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -34,15 +35,18 @@ export default function RootLayout() {
   }
 
   return (
-    <Provider store={store}>
-      <GlobalProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </ThemeProvider>
-      </GlobalProvider>
-    </Provider>
+    <ToastProvider>
+      <Provider store={store}>
+        <GlobalProvider>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </ThemeProvider>
+        </GlobalProvider>
+      </Provider>
+    </ToastProvider>
   );
 }

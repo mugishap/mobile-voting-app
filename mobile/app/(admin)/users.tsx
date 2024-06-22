@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default function Index() {
+export default function Users() {
   return (
     <View>
       <Text></Text>
-    </View>
+     </View>
   );
 }

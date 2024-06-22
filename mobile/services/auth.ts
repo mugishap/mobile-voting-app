@@ -3,6 +3,7 @@ import { login } from "@/redux/slices/userReducer"
 import { IForgotPasswordData, ILoginData, IResetPasswordData } from "@/types"
 import { storeData } from "@/utils/storage"
 import { Dispatch } from "@reduxjs/toolkit"
+import { router } from "expo-router"
 import { ToastType } from "react-native-toast-notifications"
 
 export const signIn = async ({
@@ -22,12 +23,14 @@ export const signIn = async ({
         const response = await api.post(url, data)
         storeData("token", response.data.data.token)
         storeData("user", JSON.stringify(response.data.data.user))
-        toast.show(response.data.message, { type: "success" })
+        toast.show(response.data.message, { type: "success", placement: "top" })
         setLoading(false)
+        router.navigate("(tabs)")
         return dispatch(login({ ...response.data.data }))
     } catch (error: any) {
-        return toast?.show(error.response.data.message ? error.response.data.message : "Error logging in", {
-            type: "error",
+        console.log(error.response.data.message);
+        return toast.show(error.response.data.message ? error.response.data.message : "Error logging in", {
+            type: "danger",
             placement: "top"
         })
     }
@@ -41,8 +44,9 @@ export const forgotPassword = async ({ setLoading, data, toast }: { setLoading: 
         toast.show(response.data.message, { type: "success" })
         setLoading(false)
     } catch (error: any) {
+        console.log(error);
         return toast?.show(error.response.data.message ? error.response.data.message : "Error sending password reset code", {
-            type: "error",
+            type: "danger",
             placement: "top"
         })
     }
@@ -56,8 +60,9 @@ export const resetPassword = async ({ setLoading, data, toast }: { setLoading: R
         toast.show(response.data.message, { type: "success" })
         setLoading(false)
     } catch (error: any) {
+        console.log(error);
         return toast?.show(error.response.data.message ? error.response.data.message : "Error resetting password", {
-            type: "error",
+            type: "danger",
             placement: "top"
         })
     }

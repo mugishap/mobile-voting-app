@@ -29,7 +29,7 @@ export const getCandidates = async ({
         setLoading(false)
     } catch (error: any) {
         return toast?.show(error.response.data.message ? error.response.data.message : "Error fetching candidates", {
-            type: "error",
+            type: "danger",
             placement: "top"
         })
     }
@@ -43,7 +43,7 @@ export const getCandidateById = async ({ id, setLoading, setCandidate, toast }: 
         setLoading(false)
     } catch (error: any) {
         return toast?.show(error.response.data.message ? error.response.data.message : "Error fetching candidate", {
-            type: "error",
+            type: "danger",
             placement: "top"
         })
     }
@@ -57,7 +57,7 @@ export const voteCandidate = async ({ candidateId, setLoading, toast }: { candid
         setLoading(false)
     } catch (error: any) {
         return toast?.show(error.response.data.message ? error.response.data.message : "Error voting candidate", {
-            type: "error",
+            type: "danger",
             placement: "top"
         })
     }

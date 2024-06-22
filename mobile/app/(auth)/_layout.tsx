@@ -6,6 +6,10 @@ const AuthLayout = () => {
     return (
         <>
             <Stack
+                screenOptions={{
+                    headerShown: false,
+                    header: () => null
+                }}
             >
                 <Stack.Screen
                     name='login'

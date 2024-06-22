@@ -138,7 +138,6 @@ export default function SignupScreen() {
                         />
                         <Text className=' text-red-500'>{errors?.password?.message}</Text>
                     </View>
-                    <Text className=' text-red-500'>{errors?.password?.message}</Text>
                 </View>
                 <TouchableOpacity className="w-10/12 bg-primary text-white rounded-lg p-2 my-2" onPress={handleSubmit(onSubmit)}>
                     <Text className='text-center text-white text-lg font-semibold'>

@@ -1,8 +1,7 @@
-import { compare, compareSync, hash } from "bcrypt"
+import { compareSync, hash } from "bcrypt"
 import { Request, Response } from "express"
 import jwt from 'jsonwebtoken'
 import prisma from "../prisma/prisma-client"
-import { AuthRequest } from "../types"
 import ServerResponse from "../utils/ServerResponse"
 import { sendPaswordResetEmail, sendPaswordResetSuccessfulEmail } from "../utils/mail"
 
