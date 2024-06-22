@@ -1,0 +1,79 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum Role {
+    ADMIN // The application admin
+    VOTER // This is the voter
+    CANDIDATE // This is the candidate
+
+    @@map("roles")
+}
+
+enum VerificationStatus {
+    VERIFIED
+    PENDING
+    UNVERIFIED
+
+    @@map("verification_status")
+}
+
+enum PasswordResetStatus {
+    PENDING
+    IDLE
+
+    @@map("password_reset_status")
+}
+
+model User {
+    id                   String              @id @default(uuid())
+    names                String
+    email                String              @unique
+    telephone            String?             @unique
+    password             String
+    profilePicture       String              @default("https://firebasestorage.googleapis.com/v0/b/relaxia-services.appspot.com/o/relaxia-profiles%2Fblank-profile-picture-973460_960_720.webp?alt=media") @map("profile_picture")
+    role                 Role                @default(VOTER)
+    verificationStatus   VerificationStatus  @default(UNVERIFIED) @map("verification_status")
+    verificationCode     String?             @map("verification_code")
+    verificationExpires  DateTime?           @map("verification_expires")
+    passwordResetStatus  PasswordResetStatus @default(IDLE) @map("password_reset_status")
+    passwordResetCode    String?             @map("password_reset_code")
+    passwordResetExpires DateTime?           @map("password_reset_expires")
+    createdAt            DateTime            @default(now()) @map("created_at")
+    updatedAt            DateTime            @updatedAt @map("updated_at")
+    Vote                 Vote[]
+    candidate            Candidate?          @relation("CandidateToUser")
+    candidateId          String?
+
+    @@map("users")
+}
+
+model Candidate {
+    id        String   @id @default(uuid())
+    user      User     @relation("CandidateToUser", fields: [userId], references: [id])
+    userId    String   @unique
+    mission   String
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+    Vote      Vote[]
+
+    @@map("candidates")
+}
+
+model Vote {
+    id          String    @id @default(uuid())
+    voter       User      @relation(fields: [voterId], references: [id])
+    candidate   Candidate @relation(fields: [candidateId], references: [id])
+    createdAt   DateTime  @default(now()) @map("created_at")
+    updatedAt   DateTime  @updatedAt @map("updated_at")
+    voterId     String
+    candidateId String
+
+    @@unique([voterId]) // A user can only vote once
+    @@map("votes")
+}
