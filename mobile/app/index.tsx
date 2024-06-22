@@ -41,7 +41,7 @@ const Onboarding = () => {
                             <View className='w-full mt-6'>
                                 <CustomButton
                                     title='Go to Home'
-                                    handlePress={() => router.push("/home")}
+                                    handlePress={() => router.navigate("(tabs)")}
                                     containerStyles='mb-3'
                                 />
                                 <CustomButton

@@ -17,7 +17,7 @@ export const getCandidates = async ({
     searchKey?: string,
     page?: number,
     limit?: number,
-    setMeta: React.Dispatch<React.SetStateAction<IPaginationMeta>>
+    setMeta: React.Dispatch<React.SetStateAction<IPaginationMeta | undefined>>
 }) => {
     setLoading(true)
     try {

@@ -1,6 +1,7 @@
 import { getData } from "@/utils/storage";
 import { router } from "expo-router";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const GlobalContext = createContext({});
 
@@ -8,11 +9,15 @@ export const useGlobal = () => useContext<any>(GlobalContext);
 
 const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isLogged, setIsLogged] = useState(false);
-    const [user, setUser] = useState(null);
+    const user = useSelector((state: any) => state.userSlice.user)
+    
+    const [token, setToken] = useState("");
 
     useEffect(() => {
         getData("token").then((token) => {
+            console.log("Token: ", token);
             if (token) {
+                setToken(token);
                 setIsLogged(true);
             } else {
                 setIsLogged(false);
@@ -21,18 +26,17 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
     }, []);
 
     useEffect(() => {
-        if (!isLogged) {
+        if (!token) {
             router.push("/")
         }
-    }, [isLogged])
+    }, [token])
 
     return (
         <GlobalContext.Provider
             value={{
                 isLogged,
                 setIsLogged,
-                user,
-                setUser
+                user
             }}
         >
             {children}
