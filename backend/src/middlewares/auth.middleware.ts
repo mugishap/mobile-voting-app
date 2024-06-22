@@ -6,7 +6,7 @@ import ServerResponse from "../utils/ServerResponse";
 
 export const checkLoggedIn: any = (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-        const token = req.headers.authorization?.split(" ")[1]
+        const token = req?.headers.authorization?.split(" ")[1]
         if (!token) return ServerResponse.unauthenticated(res, "You are not logged in")
         const response = jwt.verify(token, process.env.JWT_SECRET_KEY as string, {})
         if (!response) return ServerResponse.unauthenticated(res, "You are not logged in")
@@ -20,7 +20,7 @@ export const checkLoggedIn: any = (req: AuthRequest, res: Response, next: NextFu
 
 export const checkAdmin: any = async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-        const token = req.headers.authorization?.split(" ")[1]
+        const token = req?.headers.authorization?.split(" ")[1]
         if (!token) return ServerResponse.unauthorized(res, "You are not an admin")
         const response = await jwt.verify(token, process.env.JWT_SECRET_KEY as string, {})
         if (!response) return ServerResponse.unauthorized(res, "You are not an admin")
@@ -31,7 +31,6 @@ export const checkAdmin: any = async (req: AuthRequest, res: Response, next: Nex
         next()
     }
     catch (error) {
-        console.log(error);
         return ServerResponse.error(res, "Internal server error 500.")
     }
 }

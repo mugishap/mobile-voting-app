@@ -37,7 +37,6 @@ const initiateResetPassword = async (req: Request, res: Response) => {
         await sendPaswordResetEmail(email, user.names, passwordResetCode)
         return ServerResponse.success(res, "Password reset email sent successfully")
     } catch (error) {
-        console.log(error);
         return ServerResponse.error(res, "Error occured", { error })
     }
 }

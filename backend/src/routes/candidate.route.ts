@@ -10,6 +10,6 @@ candidateRouter.post("/create", [checkAdmin, validationMiddleware(CreateCandidat
 candidateRouter.get("/all", [checkLoggedIn], candidateController.getCandidates)
 candidateRouter.get("/:id", [checkLoggedIn], candidateController.getCandidateById)
 candidateRouter.patch("/vote/:candidate", [checkLoggedIn], candidateController.voteCandidate)
-candidateRouter.delete("/reset-password", [checkAdmin], candidateController.deleteCandidate)
+candidateRouter.delete("/delete", [checkAdmin], candidateController.deleteCandidate)
 
 export default candidateRouter
