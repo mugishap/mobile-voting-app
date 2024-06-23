@@ -11,5 +11,6 @@ candidateRouter.get("/all", [checkLoggedIn], candidateController.getCandidates)
 candidateRouter.get("/:id", [checkLoggedIn], candidateController.getCandidateById)
 candidateRouter.patch("/vote/:candidate", [checkLoggedIn], candidateController.voteCandidate)
 candidateRouter.delete("/delete", [checkAdmin], candidateController.deleteCandidate)
+candidateRouter.get("/votes", [checkAdmin], candidateController.getCandidatesAndVotes)
 
 export default candidateRouter

@@ -19,7 +19,7 @@ export interface ICandidate {
     mission: string;
 }
 
-export interface IVote {
+export interface IVote extends ICreationTimeStamps {
     id: string;
     voter: IUser;
     candidate: ICandidate;
@@ -46,6 +46,13 @@ export interface IRegisterData {
     email: string;
     telephone: string;
     password: string;
+}
+
+export interface IRegisterCandidateData {
+    names: string;
+    email: string;
+    telephone: string;
+    mission: string;
 }
 
 export interface IUpdateData {

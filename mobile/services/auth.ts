@@ -17,8 +17,8 @@ export const signIn = async ({
     toast: ToastType,
     dispatch: Dispatch<any>
 }) => {
-    setLoading(true)
     try {
+        setLoading(true)
         const url = "/auth/login"
         const response = await api.post(url, data)
         storeData("token", response.data.data.token)
@@ -33,12 +33,14 @@ export const signIn = async ({
             type: "danger",
             placement: "top"
         })
+    } finally {
+        setLoading(false)
     }
 }
 
 export const forgotPassword = async ({ setLoading, data, toast }: { setLoading: React.Dispatch<React.SetStateAction<boolean>>, data: IForgotPasswordData, toast: any }) => {
-    setLoading(true)
     try {
+        setLoading(true)
         const url = "/auth/initiate-reset-password"
         const response = await api.patch(url, data)
         toast.show(response.data.message, { type: "success" })
@@ -49,15 +51,18 @@ export const forgotPassword = async ({ setLoading, data, toast }: { setLoading: 
             type: "danger",
             placement: "top"
         })
+    } finally {
+        setLoading(false)
     }
 }
 
 export const resetPassword = async ({ setLoading, data, toast }: { setLoading: React.Dispatch<React.SetStateAction<boolean>>, data: IResetPasswordData, toast: any }) => {
-    setLoading(true)
     try {
+        setLoading(true)
         const url = "/auth/reset-password"
         const response = await api.patch(url, { code: data.passwordResetCode, password: data.newPassword })
         toast.show(response.data.message, { type: "success" })
+        router.push("/login")
         setLoading(false)
     } catch (error: any) {
         console.log(error);
@@ -65,5 +70,7 @@ export const resetPassword = async ({ setLoading, data, toast }: { setLoading: R
             type: "danger",
             placement: "top"
         })
+    } finally {
+        setLoading(false)
     }
 }

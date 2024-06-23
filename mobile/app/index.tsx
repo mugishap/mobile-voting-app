@@ -1,13 +1,16 @@
 import CustomButton from '@/components/CustomButton'
 import { useGlobal } from '@/context'
+import { logout } from '@/redux/slices/userReducer'
 import { Stack, useRouter } from 'expo-router'
 import React from 'react'
 import { Image, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useDispatch } from 'react-redux'
 
 const Onboarding = () => {
     const { user, isLogged } = useGlobal();
     const router = useRouter();
+    const dispatch = useDispatch()
     return (
         <SafeAreaView
             className='bg-white'
@@ -46,7 +49,7 @@ const Onboarding = () => {
                                 />
                                 <CustomButton
                                     title='Logout'
-                                    handlePress={() => router.push("/login")}
+                                    handlePress={() => dispatch(logout({}))}
                                     variant='outline'
                                     containerStyles='mt-3 border-red-500'
                                     titleStyles=' text-red-500'

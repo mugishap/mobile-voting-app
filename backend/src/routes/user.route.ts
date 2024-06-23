@@ -8,6 +8,7 @@ const userRouter = Router()
 
 userRouter.post("/create", [validationMiddleware(CreateUserDTO)], userController.createUser)
 userRouter.put("/update", [checkLoggedIn, validationMiddleware(UpdateUserDTO)], userController.updateUser)
+userRouter.get("/my-votes", [checkLoggedIn, validationMiddleware(UpdateUserDTO)], userController.getMyVotes)
 userRouter.get("/me", [checkLoggedIn], userController.me)
 userRouter.get("/all", [checkAdmin], userController.all)
 userRouter.get("/:id", [], userController.getById)

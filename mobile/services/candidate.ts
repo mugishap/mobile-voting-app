@@ -1,5 +1,5 @@
 import api from "@/lib/axios.config"
-import { ICandidate, IPaginationMeta } from "@/types"
+import { ICandidate, IPaginationMeta, IRegisterCandidateData } from "@/types"
 import { ToastType } from "react-native-toast-notifications"
 
 export const getCandidates = async ({
@@ -37,11 +37,16 @@ export const getCandidates = async ({
     }
 }
 
-export const getCandidateById = async ({ id, setLoading, setCandidate, toast }: { id: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>, setCandidate: React.Dispatch<React.SetStateAction<ICandidate>>, toast: ToastType }) => {
+export const getCandidateById = async ({ id, setLoading, setCandidate, toast }: {
+    id: string,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setCandidate: React.Dispatch<React.SetStateAction<ICandidate | undefined>>,
+    toast: ToastType
+}) => {
     try {
         setLoading(true)
         const response = await api.get(`/candidate/${id}`)
-        setCandidate(response.data.data)
+        setCandidate(response.data.data.candidate)
         setLoading(false)
     } catch (error: any) {
         return toast?.show(error.response.data.message ? error.response.data.message : "Error fetching candidate", {
@@ -59,6 +64,21 @@ export const voteCandidate = async ({ candidateId, setLoading, toast }: { candid
         setLoading(false)
     } catch (error: any) {
         return toast?.show(error.response.data.message ? error.response.data.message : "Error voting candidate", {
+            type: "danger",
+            placement: "top"
+        })
+    }
+}
+
+export const registerCandidate = async ({ data, setLoading, toast, dispatch, reset }: { data: IRegisterCandidateData, setLoading: React.Dispatch<React.SetStateAction<boolean>>, toast: ToastType, dispatch: any, reset: any }) => {
+    try {
+        setLoading(true)
+        const response = await api.post("/candidate/create", data)
+        toast.show(response.data.message, { type: "success" })
+        setLoading(false)
+        reset()
+    } catch (error: any) {
+        return toast?.show(error.response.data.message ? error.response.data.message : "Error registering candidate", {
             type: "danger",
             placement: "top"
         })

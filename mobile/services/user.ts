@@ -1,6 +1,6 @@
 import api from "@/lib/axios.config"
 import { login } from "@/redux/slices/userReducer"
-import { IRegisterData, IUpdateData } from "@/types"
+import { IRegisterData, IUpdateData, IVote } from "@/types"
 import { clearAll, storeData } from "@/utils/storage"
 import { router } from "expo-router"
 import { Dispatch } from "react"
@@ -97,5 +97,31 @@ export const deleteMyAccount = async ({ toast }: { toast: ToastType }) => {
             type: "danger",
             placement: "top"
         })
+    }
+}
+
+export const getMyVotes = async ({
+    setVotes,
+    toast,
+    setLoading
+}: {
+    toast: ToastType,
+    setVotes: React.Dispatch<React.SetStateAction<IVote[]>>,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
+    try {
+        setLoading(true)
+        const url = "/user/my-votes"
+        const response = await api.get(url)
+        setVotes(response.data.data.votes)
+        console.log(response.data.data.votes);
+        setLoading(false)
+    } catch (error: any) {
+        return toast?.show(error.response.data.message ? error.response.data.message : "Error fetching votes", {
+            type: "danger",
+            placement: "top"
+        })
+    } finally {
+        setLoading(false)
     }
 }

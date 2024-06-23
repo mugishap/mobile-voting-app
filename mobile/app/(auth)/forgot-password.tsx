@@ -2,10 +2,10 @@ import { forgotPassword } from '@/services/auth';
 import { IForgotPasswordData } from '@/types';
 import { AntDesign } from '@expo/vector-icons';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, Stack, router } from 'expo-router';
+import { Link, router } from 'expo-router';
 import React, { useState } from 'react';
 import { Controller, Resolver, SubmitHandler, useForm } from "react-hook-form";
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useToast } from 'react-native-toast-notifications';
 import * as yup from 'yup';
@@ -74,11 +74,11 @@ export default function ForgotPasswordScreen() {
                         <Text className='text-primary'>Enter it here</Text>
                     </Link>
                 </Text>
-                <TouchableOpacity className="w-10/12 bg-primary text-white rounded-lg p-2 my-2" onPress={handleSubmit(onSubmit)}>
+                <TouchableOpacity className="flex items-center justify-center w-10/12 bg-primary text-white rounded-lg p-2 my-2" onPress={handleSubmit(onSubmit)}>
                     <Text className='text-center text-white text-lg font-semibold'>
                         {
                             loading ?
-                                <AntDesign name="loading1" size={20} color="white" className='animate-spin' />
+                                <ActivityIndicator size='small' color='white' />
                                 :
                                 "Send Code"
                         }

@@ -1,6 +1,7 @@
 import { Slice, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../types";
 import { router } from "expo-router";
+import { removeValue } from "@/utils/storage";
 
 const initialState: {
     user: IUser;
@@ -37,6 +38,9 @@ const userSlice: Slice = createSlice({
             state.token = ""
             state.users = []
             router.push("/login");
+            removeValue("token").then(() => {
+                console.log("token removed")
+            });
         },
         updateUser: (state, { payload }) => {
             state.user = payload;

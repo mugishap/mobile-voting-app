@@ -9,6 +9,7 @@ export const api = axios.create({
 // Fetch token from AsyncStorage
 AsyncStorage.getItem("token")
     .then((token) => {
+        if (!token) return console.log("Token not found in AsyncStorage");
         // Set the token as the authorization header
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     })

@@ -119,7 +119,8 @@ const getCandidateById = async (req: Request, res: Response) => {
         const candidate = await prisma.candidate.findUnique({
             where: {
                 id
-            }
+            },
+            include: { user: true }
         })
         return ServerResponse.success(res, "Candidate fetched successfully", { candidate })
     } catch (error: any) {
@@ -145,14 +146,37 @@ const voteCandidate: any = async (req: AuthRequest, res: Response) => {
                 }
             }
         })
-        return ServerResponse.success(res, "Candidate voted successfully", { candidate })
+        return ServerResponse.success(res, "Candidate voted successfully", { candidate, vote })
     } catch (error: any) {
         // Catch error if user has already voted for the candidate
         if (error.code === "P2002") {
-            return ServerResponse.error(res, "You have already voted for this candidate", 400)
+            return ServerResponse.error(res, "You have already voted", 400)
         }
         return ServerResponse.error(res, "Error occured", { error })
     }
+}
+
+const getCandidatesAndVotes = async (req: Request, res: Response) => {
+    try {
+        const candidates = await prisma.candidate.findMany({
+            include: {
+                user: true,
+                votes: {
+                    select: {
+                        voter: {
+                            select: {
+                                names: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        return ServerResponse.success(res, "Candidates fetched successfully", { candidates })
+    } catch (error: any) {
+        return ServerResponse.error(res, "Error occured", { error })
+    }
+
 }
 
 const candidateController = {
@@ -160,7 +184,8 @@ const candidateController = {
     getCandidates,
     voteCandidate,
     getCandidateById,
-    deleteCandidate
+    deleteCandidate,
+    getCandidatesAndVotes
 }
 
 export default candidateController;

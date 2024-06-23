@@ -219,6 +219,24 @@
         ]
       }
     },
+    "/user/my-votes": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/user/me": {
       "get": {
         "tags": [
@@ -564,6 +582,24 @@
     },
     "/candidate/delete": {
       "delete": {
+        "tags": [
+          "Candidates"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/candidate/votes": {
+      "get": {
         "tags": [
           "Candidates"
         ],

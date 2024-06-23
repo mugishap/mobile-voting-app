@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { compareSync, hashSync } from "bcrypt";
 import { config } from "dotenv";
 import { Request, Response } from "express";
@@ -5,7 +6,6 @@ import jwt from 'jsonwebtoken';
 import prisma from "../prisma/prisma-client";
 import { AuthRequest } from "../types";
 import ServerResponse from "../utils/ServerResponse";
-import { User } from "@prisma/client";
 
 config()
 
@@ -156,6 +156,16 @@ const updatePassword: any = async (req: AuthRequest, res: Response) => {
     }
 }
 
+const getMyVotes: any = async (req: AuthRequest, res: Response) => {
+    try {
+        const votes = await prisma.vote.findMany({ where: { voterId: req.user.id }, include: { candidate: { include: { user: true } } } })
+        return ServerResponse.success(res, "Votes fetched successfully", { votes })
+    } catch (error) {
+        console.log(error);
+        return ServerResponse.error(res, "Error occured", { error })
+    }
+}
+
 const userController = {
     createUser,
     updateUser,
@@ -167,7 +177,8 @@ const userController = {
     removeAvatar,
     deleteById,
     updateAvatar,
-    updatePassword
+    updatePassword,
+    getMyVotes
 }
 
 export default userController;
