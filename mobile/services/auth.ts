@@ -56,7 +56,7 @@ export const resetPassword = async ({ setLoading, data, toast }: { setLoading: R
     setLoading(true)
     try {
         const url = "/auth/reset-password"
-        const response = await api.patch(url, data)
+        const response = await api.patch(url, { code: data.passwordResetCode, password: data.newPassword })
         toast.show(response.data.message, { type: "success" })
         setLoading(false)
     } catch (error: any) {

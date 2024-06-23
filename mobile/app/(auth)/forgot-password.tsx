@@ -2,7 +2,7 @@ import { forgotPassword } from '@/services/auth';
 import { IForgotPasswordData } from '@/types';
 import { AntDesign } from '@expo/vector-icons';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, router } from 'expo-router';
 import React, { useState } from 'react';
 import { Controller, Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -33,7 +33,10 @@ export default function ForgotPasswordScreen() {
     }
 
     return (
-        <SafeAreaView className='w-full flex-1 flex flex-col bg-white items-center'>
+        <SafeAreaView className='w-full flex-1 flex flex-col bg-white items-center pt-10'>
+            <TouchableOpacity onPress={() => router.back()} className='absolute top-14 left-4'>
+                <AntDesign name="arrowleft" size={24} color="black" />
+            </TouchableOpacity>
             <Image
                 source={require("../../assets/images/nec-logo.jpeg")}
                 resizeMode='contain'

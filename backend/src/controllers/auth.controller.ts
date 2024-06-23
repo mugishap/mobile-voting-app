@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import jwt from 'jsonwebtoken'
 import prisma from "../prisma/prisma-client"
 import ServerResponse from "../utils/ServerResponse"
-import { sendPaswordResetEmail, sendPaswordResetSuccessfulEmail } from "../utils/mail"
+import { sendPaswordResetEmail, sendPaswordResetSuccessfulEmail } from "../utils/mail/mail"
 
 const login = async (req: Request, res: Response) => {
     try {

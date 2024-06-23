@@ -1,5 +1,6 @@
 import { Slice, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../types";
+import { router } from "expo-router";
 
 const initialState: {
     user: IUser;
@@ -35,7 +36,7 @@ const userSlice: Slice = createSlice({
             }
             state.token = ""
             state.users = []
-            // router.push("/login");
+            router.push("/login");
         },
         updateUser: (state, { payload }) => {
             state.user = payload;

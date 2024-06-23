@@ -37,7 +37,7 @@ const Onboarding = () => {
                             </Text>
                     }
                     {
-                        user ?
+                        isLogged ?
                             <View className='w-full mt-6'>
                                 <CustomButton
                                     title='Go to Home'

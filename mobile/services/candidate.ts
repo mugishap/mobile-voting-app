@@ -24,7 +24,9 @@ export const getCandidates = async ({
         let url = `/candidate/all?page=${page}&limit=${limit}`
         if (searchKey) url = url.concat(`&searchKey=${searchKey}`)
         const response = await api.get(url)
-        setCandidates(response.data.data.candidates)
+        // Set candidates should start from previous candidates and add the new ones
+        page == 1 ? setCandidates(response.data.data.candidates) : setCandidates(prevCandidates => [...prevCandidates, ...response.data.data.candidates])
+
         setMeta(response.data.data.meta)
         setLoading(false)
     } catch (error: any) {

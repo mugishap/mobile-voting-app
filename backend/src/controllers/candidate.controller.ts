@@ -94,6 +94,7 @@ const getCandidates = async (req: Request, res: Response) => {
         }
         const candidates = await prisma.candidate.findMany({
             where: whereCondition,
+            include: { user: true },
             skip: page && limit ? ((parseInt(page as string) - 1) * parseInt(limit as string)) : 0,
             take: limit ? Number(limit) : 10,
         });
@@ -126,7 +127,7 @@ const getCandidateById = async (req: Request, res: Response) => {
     }
 }
 
-const voteCandidate:any = async (req: AuthRequest, res: Response) => {
+const voteCandidate: any = async (req: AuthRequest, res: Response) => {
     try {
         const { candidate } = req.params
         const { id } = req.user

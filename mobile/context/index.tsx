@@ -8,14 +8,13 @@ const GlobalContext = createContext({});
 export const useGlobal = () => useContext<any>(GlobalContext);
 
 const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [isLogged, setIsLogged] = useState(false);
+    const [isLogged, setIsLogged] = useState<boolean>(false);
     const user = useSelector((state: any) => state.userSlice.user)
-    
-    const [token, setToken] = useState("");
+
+    const [token, setToken] = useState<string>("");
 
     useEffect(() => {
         getData("token").then((token) => {
-            console.log("Token: ", token);
             if (token) {
                 setToken(token);
                 setIsLogged(true);

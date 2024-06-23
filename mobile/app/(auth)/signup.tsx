@@ -40,7 +40,7 @@ export default function SignupScreen() {
     }
 
     return (
-        <ScrollView>
+        <ScrollView className='w-full flex-1'>
             <SafeAreaView className='w-full flex-1 flex flex-col bg-white items-center'>
                 <Image
                     source={require("../../assets/images/nec-logo.jpeg")}

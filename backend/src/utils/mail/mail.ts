@@ -25,6 +25,7 @@ transporter.verify(function (error, success) {
 
 const sendPaswordResetEmail = async (email: string, names: string, passwordResetToken: string) => {
     try {
+        console.log(__dirname);
         const templatePath = path.join(__dirname, 'templates', 'reset-password.hbs');
         const source = fs.readFileSync(templatePath, 'utf-8').toString();
         const template = handlebars.compile(source);
